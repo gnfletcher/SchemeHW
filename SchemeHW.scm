@@ -38,12 +38,12 @@
 
 ;Increments both atoms of the list.
 (define (incr_both List)
-	(list (+ 1 (car List)) (+ 1 (cadr List)))
+	(cons (+ 1 (car List)) (+ 1 (cadr List)))
 )
 
 ;Increments the second atom in the list.
 (define (incr_total List)
-	(list (car List) (+ 1 (cadr List)))
+	(cons (car List) (+ 1 (cadr List)))
 )
 
 ;Calculates the conditonal probability of the passed list. Calculated as first atom / second atom.
