@@ -3,7 +3,7 @@
 ;Main function that takes list of data from user, sequential passes list to add counter list, check patient data and increment appropriate atom in counter list and calculate conditional probability
 ;and returns a four integer and one string list containing probablity calculations and qualitative decision based on data.
 (define (medical_test Patient_Data)
-	(prob_list(count(new_list(((0 0) (0 0) (0 0) (0 0)) 'Patient_Data))))
+	(prob_list(count(new_list('((0 0) (0 0) (0 0) (0 0)) 'Patient_Data))))
 )
 
 ;Adds list to car of Patient Data passed by user to be used to keep track of test results.
@@ -21,26 +21,20 @@
 
 ;Takes counts list and next patient data from count and determines if patient is sick, if so passes to sick patient else to healthy patient.
 (define (evaluate_patient Counts Patient)
-	(append '(car '(test_1 car 'Counts cadr 'Counts 'Patient) car '(test_2 caddr 'Counts cadddr 'Counts 'Patient)))
+	(list (car (test_1 (car Counts) (cadr Counts) 'Patient) car (test_2 (caddr Counts) (cadddr Counts) 'Patient)))
 )
 
 ;Test_1_Result
-(define (test_1 Pos Total Patient)
-	(cond ())
+(define (test_1 Pos_1 Neg_1 Patient)
+	(cond ((= (caddr 'Patient) 1) 
+		(cond ((= (cadr 'Patient) 1) (list (incr_both 'Pos_1) 'Neg_1)))
+		(else (list (incr_total 'Pos_1) 'Neg_1))))
+	(else (cond ((= (cadr 'Patient) 0) (list 'Pos_1 (incr_both 'Neg_1))))
+		(else (list 'Pos_1 (incr_total 'Neg_1))))
 )
 
 ;Test_2_Result
-(define (test_2)
-	(cond ())
-)
-
-;Sick_Patient 
-(define (sick_patient Counts Patient)
-	(cond ())
-)
-
-;Healthy_Patient 
-(define (sick_patient Counts Patient)
+(define (test_2 Pos_Sick Pos_Total Patient)
 	(cond ())
 )
 
@@ -55,7 +49,7 @@
 )
 
 ;Increments the second atom in the list.
-(define (incr_b List)
+(define (incr_total List)
 	(list (car 'List) (+ 1 (cadr 'List)))
 )
 
