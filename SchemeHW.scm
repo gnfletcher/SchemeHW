@@ -10,7 +10,7 @@
 ;This list while be passed to the probability calculator function.
 ;List format: ((PostiveTest1(if deseased) PositiveTest1(total)) (NegativeTest1(if healthy) NegativeTest1(total)) (PostiveTest2(if deseased) PositiveTest2(total)) (NegativeTest2(if healthy) NegativeTest2(total)))
 (define (new_list Patient_Data)
-	(append '(((0 0) (0 0) (0 0) (0 0))) Patient_Data)
+	(list '(((0 0) (0 0) (0 0) (0 0))) Patient_Data)
 )
 
 ;Counts takes list of data from main function (medical_test), checks if only the 8 atom list is left in the list, passes list to calc_prob function if true else passes the 8 atom list and the next patient data to evaluate_patient then pops the first two lists and adds the new 8 atom list back.	
@@ -24,13 +24,16 @@
 	(append (test_result (car Counts) (cadr Counts) Patient) (test_result (caddr Counts) (cadddr Counts) Patient))
 )
 
-;Test_1_Result
+;Test_Result
 (define (test_result Pos Neg Patient)
-	(cond ((= (caddr Patient) 1) 
-		(cond ((= (cadr Patient) 1) (list (incr_both Pos) Neg)))
-		(else (list (incr_total Pos) Neg))))
-	(else (cond ((= (cadr Patient) 0) (list Pos (incr_both Neg))))
-		(else (list Pos (incr_total Neg))))
+	(cond ((= (caddr Patient) 1) (list (test_count Pos Patient) Neg))
+		(else (list Pos (test_count Neg Patient))))
+)
+
+;Test_Result_count
+(define (test_count Test_Totals Patient)
+	(cond ((= (cadr Patient) 1) (list (incr_both Test_Totals)))
+		(else (incr_total Test_Totals)))
 )
 
 ;Increments both atoms of the list.
@@ -58,6 +61,6 @@
 	(cond (> (car Prob_List) (cadr Prob_List))
 		(cond (> (caddr Prob_List) (cadddr Prob_List)) (list Prob_List 'test1))
 		(else (list Prob_List 'neither)))
-	(else (cond ((< (caddr Prob_List) (cadddr Prob_List))) (list Prob_List ('test2))))
+	(else (cond ((< (caddr Prob_List) (cadddr Prob_List))) (list Prob_List 'test2)))
 		(else (list Prob_List 'neither))
 )
