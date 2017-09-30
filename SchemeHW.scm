@@ -21,31 +21,21 @@
 
 ;Takes counts list and next patient data from count and determines if patient is sick, if so passes to sick patient else to healthy patient.
 (define (evaluate_patient Counts Patient)
-	(list (car (test_1 (car Counts) (cadr Counts) 'Patient) car (test_2 (caddr Counts) (cadddr Counts) 'Patient)))
+	(list (car (test (car Counts) (cadr Counts) 'Patient) car (test (caddr Counts) (cadddr Counts) 'Patient)))
 )
 
 ;Test_1_Result
-(define (test_1 Pos_1 Neg_1 Patient)
+(define (test_result Pos Neg Patient)
 	(cond ((= (caddr 'Patient) 1) 
-		(cond ((= (cadr 'Patient) 1) (list (incr_both 'Pos_1) 'Neg_1)))
-		(else (list (incr_total 'Pos_1) 'Neg_1))))
-	(else (cond ((= (cadr 'Patient) 0) (list 'Pos_1 (incr_both 'Neg_1))))
-		(else (list 'Pos_1 (incr_total 'Neg_1))))
-)
-
-;Test_2_Result
-(define (test_2 Pos_Sick Pos_Total Patient)
-	(cond ())
+		(cond ((= (cadr 'Patient) 1) (list (incr_both 'Pos) 'Neg)))
+		(else (list (incr_total 'Pos) 'Neg))))
+	(else (cond ((= (cadr 'Patient) 0) (list 'Pos (incr_both 'Neg))))
+		(else (list 'Pos (incr_total 'Neg))))
 )
 
 ;Increments both atoms of the list.
 (define (incr_both List)
 	(list (+ 1 (car 'List)) (+ 1 (cadr 'List)))
-)
-
-;Increments first atom in the list.
-(define (incr_a List)
-	(list (+ 1 (car 'List)) (cadr 'List))
 )
 
 ;Increments the second atom in the list.
