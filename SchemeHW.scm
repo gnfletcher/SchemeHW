@@ -8,7 +8,7 @@
 
 ;Adds list to car of Patient Data passed by user to be used to keep track of test results.
 ;This list while be passed to the probability calculator function.
-;List format: (PostiveTest1(if deseased) PositiveTest1(total) PostiveTest2(if deseased) PositiveTest2(total) NegativeTest1(if healthy) NegativeTest1(total) NegativeTest2(if healthy) NegativeTest2(total))
+;List format: ((PostiveTest1(if deseased) PositiveTest1(total)) (NegativeTest1(if healthy) NegativeTest1(total)) (PostiveTest2(if deseased) PositiveTest2(total)) (NegativeTest2(if healthy) NegativeTest2(total)))
 (define (new_list Counts Patient_Data)
 	(cons 'Counts 'Patient_Data)
 )
@@ -21,25 +21,27 @@
 
 ;Takes counts list and next patient data from count and determines if patient is sick, if so passes to sick patient else to healthy patient.
 (define (evaluate_patient Counts Patient)
-	(cond (equals? (cadr 'Next_Patient) 1)
-		(append '(sick_patient_1 (car 'Counts) 'Patient) '(sick_patient_2 (cadr 'Counts) 'Patient) '(caddr 'Counts) '(cadddr 'Counts))
-	(else (append '(healthy_patient_1 (caddr 'Counts) 'Patient) '(healthy_patient_2 (cadddr 'Counts) 'Patient) '(car 'Counts) '(cadr 'Counts))))
+	(append '(car '(test_1 car 'Counts cadr 'Counts 'Patient) car '(test_2 caddr 'Counts cadddr 'Counts 'Patient)))
 )
 
-;Increments test result counter for test 1 in Counts for sick patients.
-(define (test_1 Test Patient)
-	(cond (equals? (caddr 'Patient) 1)
-		(list ((+ 1 (caar 'Test
+;Test_1_Result
+(define (test_1 Pos Total Patient)
+	(cond ())
 )
 
-;Takes the list of counts lists and individually passes them to the probability calculator and returns a list of probabilities.
-(define (prob_list Counts)
-	(list (calc_prob (car Counts)) (calc_prob (cadr Counts)) (calc_prob (caddr Counts)) (calc_prob (cadddr Counts)))
+;Test_2_Result
+(define (test_2)
+	(cond ())
 )
 
-;Calculates the conditonal probability of the passed list. Calculated as first atom / second atom.
-(define (calc_prob List)
-	(/ (car 'List) (cadr 'List)
+;Sick_Patient 
+(define (sick_patient Counts Patient)
+	(cond ())
+)
+
+;Healthy_Patient 
+(define (sick_patient Counts Patient)
+	(cond ())
 )
 
 ;Increments both atoms of the list.
@@ -55,4 +57,14 @@
 ;Increments the second atom in the list.
 (define (incr_b List)
 	(list (car 'List) (+ 1 (cadr 'List)))
+)
+
+;Calculates the conditonal probability of the passed list. Calculated as first atom / second atom.
+(define (calc_prob List)
+	(/ (car 'List) (cadr 'List)
+)
+
+;Takes the list of counts lists and individually passes them to the probability calculator and returns a list of probabilities.
+(define (prob_list Counts)
+	(list (calc_prob (car Counts)) (calc_prob (cadr Counts)) (calc_prob (caddr Counts)) (calc_prob (cadddr Counts)))
 )
