@@ -26,30 +26,36 @@
 
 ;Test1_Result evaluate
 (define (test1_result Pos Neg Patient)
-	(cond ((= (caddr Patient) 1) (list (test_count Pos Patient) Neg))
-		(else (list Pos (test_count Neg Patient))))
+	(cond ((= (caddr Patient) 1) (list (test_pos Pos Patient) Neg))
+		(else (list Pos (test_neg Neg Patient))))
 )
 
 ;Test2_Result evaluate
 (define (test2_result Pos Neg Patient)
-	(cond ((= (cadddr Patient) 1) (list (test_count Pos Patient) Neg))
-		(else (list Pos (test_count Neg Patient))))
+	(cond ((= (cadddr Patient) 1) (list (test_pos Pos Patient) Neg))
+		(else (list Pos (test_neg Neg Patient))))
 )
 
-;Test_Result_count
-(define (test_count Test_Totals Patient)
-	(cond ((= (cadr Patient) 1) (incr_both Test_Totals))
-		(else (incr_total Test_Totals)))
+;Test_Pos
+(define (test_neg Test_Totals Patient)
+	(cond ((= (cadr Patient) 1) (incr_both (car Test_Totals) (cadr Test_Totals))
+		(else (incr_total (car Test_Totals) (cadr Test_Totals)))))
+)
+
+;Test_Neg
+(define (test_pos Test_Totals Patient)
+	(cond ((= (cadr Patient) 0) (incr_both (car Test_Totals) (cadr Test_Totals))
+		(else (incr_total (car Test_Totals) (cadr Test_Totals)))))
 )
 
 ;Increments both atoms of the list.
-(define (incr_both List)
-	(list (+ 1 (car List)) (+ 1 (cadr List)))
+(define (incr_both a b )
+	(list (+ a 1) (+ (b 1))
 )
 
 ;Increments the second atom in the list.
-(define (incr_total List)
-	(list (car List) (+ 1 (cadr List)))
+(define (incr_total a b)
+	(list a (+ b 1))
 )
 
 ;Calculates the conditonal probability of the passed list. Calculated as first atom / second atom.
