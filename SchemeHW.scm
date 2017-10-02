@@ -71,8 +71,8 @@
 ;Makes a decision based on prob_list
 (define (decision Prob_List)
 	(cond ((> (car Prob_List) (cadr Prob_List))
-		(cond ((> (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'Test1))
-		(else (append Prob_List 'Neither))))
-	(else (cond ((< (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'Test2))
-		(else (append Prob_List 'Neither)))))
+		(cond ((> (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'test1))
+		(else (append Prob_List 'neither))))
+	(else (cond ((< (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'test2))
+		(else (append Prob_List 'neither)))))
 )
