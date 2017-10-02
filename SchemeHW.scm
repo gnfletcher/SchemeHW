@@ -15,7 +15,7 @@
 
 ;Counts takes list of data from main function (medical_test), checks if only the 8 atom list is left in the list, passes list to calc_prob function if true else passes the 8 atom list and the next patient data to evaluate_patient then pops the first two lists and adds the new 8 atom list back.	
 (define (count Patient_Data)
-		(cond	((null? (cdr Patient_Data)) Patient_Data)
+		(cond	((null? (cdr Patient_Data))  car Patient_Data)
 				(else (count (cons (evaluate_patient (car Patient_Data) (cadr Patient_Data)) (cddr Patient_Data)))))
 )
 
@@ -38,19 +38,19 @@
 
 ;Test_Pos
 (define (test_neg Test_Totals Patient)
-	(cond ((= (cadr Patient) 1) (incr_both (car Test_Totals) (cadr Test_Totals))
-		(else (incr_total (car Test_Totals) (cadr Test_Totals)))))
+	(cond ((= (cadr Patient) 0) (incr_both (car Test_Totals) (cadr Test_Totals)))
+		(else (incr_total (car Test_Totals) (cadr Test_Totals))))
 )
 
 ;Test_Neg
 (define (test_pos Test_Totals Patient)
-	(cond ((= (cadr Patient) 0) (incr_both (car Test_Totals) (cadr Test_Totals))
-		(else (incr_total (car Test_Totals) (cadr Test_Totals)))))
+	(cond ((= (cadr Patient) 1) (incr_both (car Test_Totals) (cadr Test_Totals)))
+		(else (incr_total (car Test_Totals) (cadr Test_Totals))))
 )
 
 ;Increments both atoms of the list.
-(define (incr_both a b )
-	(list (+ a 1) (+ (b 1))
+(define (incr_both a b)
+	(list (+ a 1) (+ b 1))
 )
 
 ;Increments the second atom in the list.
