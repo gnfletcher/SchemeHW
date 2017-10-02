@@ -21,29 +21,35 @@
 
 ;Takes counts list and next patient data from count and determines if patient is sick, if so passes to sick patient else to healthy patient.
 (define (evaluate_patient Counts Patient)
-	(list (test_result (car Counts) (cadr Counts) Patient) (test_result (caddr Counts) (cadddr Counts) Patient))
+	(append (test1_result (car Counts) (cadr Counts) Patient) (test2_result (caddr Counts) (cadddr Counts) Patient))
 )
 
-;Test_Result
-(define (test_result Pos Neg Patient)
+;Test1_Result evaluate
+(define (test1_result Pos Neg Patient)
 	(cond ((= (caddr Patient) 1) (list (test_count Pos Patient) Neg))
+		(else (list Pos (test_count Neg Patient))))
+)
+
+;Test2_Result evaluate
+(define (test2_result Pos Neg Patient)
+	(cond ((= (cadddr Patient) 1) (list (test_count Pos Patient) Neg))
 		(else (list Pos (test_count Neg Patient))))
 )
 
 ;Test_Result_count
 (define (test_count Test_Totals Patient)
-	(cond ((= (cadr Patient) 1) (list (incr_both Test_Totals)))
+	(cond ((= (cadr Patient) 1) (incr_both Test_Totals))
 		(else (incr_total Test_Totals)))
 )
 
 ;Increments both atoms of the list.
 (define (incr_both List)
-	(cons (+ 1 (car List)) (+ 1 (cadr List)))
+	(list (+ 1 (car List)) (+ 1 (cadr List)))
 )
 
 ;Increments the second atom in the list.
 (define (incr_total List)
-	(cons (car List) (+ 1 (cadr List)))
+	(list (car List) (+ 1 (cadr List)))
 )
 
 ;Calculates the conditonal probability of the passed list. Calculated as first atom / second atom.
