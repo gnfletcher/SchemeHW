@@ -10,18 +10,18 @@
 ;This list while be passed to the probability calculator function.
 ;List format: ((PostiveTest1(if deseased) PositiveTest1(total)) (NegativeTest1(if healthy) NegativeTest1(total)) (PostiveTest2(if deseased) PositiveTest2(total)) (NegativeTest2(if healthy) NegativeTest2(total)))
 (define (new_list Patient_Data)
-	(list '(((0 0) (0 0) (0 0) (0 0))) Patient_Data)
+	(cons '((0 0) (0 0) (0 0) (0 0)) Patient_Data)
 )
 
 ;Counts takes list of data from main function (medical_test), checks if only the 8 atom list is left in the list, passes list to calc_prob function if true else passes the 8 atom list and the next patient data to evaluate_patient then pops the first two lists and adds the new 8 atom list back.	
 (define (count Patient_Data)
 		(cond	((null? (cdr Patient_Data)) Patient_Data)
-				(else (count (cons (evaluate_patient((car Patient_Data) (cadr Patient_Data))) (cddr Patient_Data)))))
+				(else (count (cons (evaluate_patient (car Patient_Data) (cadr Patient_Data)) (cddr Patient_Data)))))
 )
 
 ;Takes counts list and next patient data from count and determines if patient is sick, if so passes to sick patient else to healthy patient.
 (define (evaluate_patient Counts Patient)
-	(append (test_result (car Counts) (cadr Counts) Patient) (test_result (caddr Counts) (cadddr Counts) Patient))
+	(list (test_result (car Counts) (cadr Counts) Patient) (test_result (caddr Counts) (cadddr Counts) Patient))
 )
 
 ;Test_Result
