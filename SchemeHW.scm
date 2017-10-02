@@ -15,7 +15,7 @@
 
 ;Counts takes list of data from main function (medical_test), checks if only the 8 atom list is left in the list, passes list to calc_prob function if true else passes the 8 atom list and the next patient data to evaluate_patient then pops the first two lists and adds the new 8 atom list back.	
 (define (count Patient_Data)
-		(cond	((null? (cdr Patient_Data))  car Patient_Data)
+		(cond	((null? (cdr Patient_Data))  (car Patient_Data))
 				(else (count (cons (evaluate_patient (car Patient_Data) (cadr Patient_Data)) (cddr Patient_Data)))))
 )
 
@@ -71,8 +71,8 @@
 ;Makes a decision based on prob_list
 (define (decision Prob_List)
 	(cond ((> (car Prob_List) (cadr Prob_List))
-		(cond ((> (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'test1))
-		(else (append Prob_List 'neither))))
-	(else (cond ((< (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'test2))
-		(else (append Prob_List 'neither)))))
+		(cond ((> (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'Test1))
+		(else (append Prob_List 'Neither))))
+	(else (cond ((< (caddr Prob_List) (cadddr Prob_List)) (append Prob_List 'Test2))
+		(else (append Prob_List 'Neither)))))
 )
